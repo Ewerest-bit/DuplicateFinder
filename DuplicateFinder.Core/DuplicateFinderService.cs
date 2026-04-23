@@ -10,15 +10,15 @@ namespace DuplicateFinder.Core
     {
         public Dictionary<string, List<string>> FindDuplicates(string rootPath)
         {
-            var fscanner = new FileScanner();
-            var fhasher = new FindHasher();
+            var fileScanner = new FileScanner();
+            var fileHasher = new FileHasher();
 
-            var allFiles = fscanner.FileScan(rootPath);
+            var allFiles = fileScanner.FileScan(rootPath);
 
             var duplicateGroups = new Dictionary<string, List<string>>();
             foreach (var file in allFiles)
             {
-                var hash = fhasher.GetHash(file);
+                var hash = fileHasher.GetHash(file);
                 if (!duplicateGroups.ContainsKey(hash))
                     duplicateGroups[hash] = new List<string>();
 

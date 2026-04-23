@@ -4,7 +4,7 @@ using System.Runtime.Intrinsics.Arm;
 
 namespace DuplicateFinder.Core
 {
-    public class FindHasher
+    public class FileHasher
     {
         public string GetHash(string path)
         {

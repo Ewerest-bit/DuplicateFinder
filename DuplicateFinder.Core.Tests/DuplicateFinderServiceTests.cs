@@ -12,11 +12,11 @@ namespace DuplicateFinder.Core.Tests
                 ("folder2", "file2.txt", "Hello")
                 );
 
-            var duplFindService = new DuplicateFinderService();
+            var duplicateFinderService = new DuplicateFinderService();
 
             try
             {
-                var duplicateGroup = duplFindService.FindDuplicates(dir);
+                var duplicateGroup = duplicateFinderService.FindDuplicates(dir);
 
                 var filesInGroup = Assert.Single(duplicateGroup.Values);
                 Assert.Equal(2, filesInGroup.Count);
@@ -34,11 +34,49 @@ namespace DuplicateFinder.Core.Tests
                 ("folder2", "file2.txt", "world")
                 );
             
-            var duplFindService = new DuplicateFinderService();
+            var duplicateFinderService = new DuplicateFinderService();
 
             try
             {
-                var duplicateGroup = duplFindService.FindDuplicates(dir);
+                var duplicateGroup = duplicateFinderService.FindDuplicates(dir);
+
+                Assert.Empty(duplicateGroup);
+            }
+            finally
+            {
+                DeleteDirectory(dir);
+            }
+        }
+        [Fact]
+        public void FindDuplicates_ReturnsEmptyResult_WhenDirectoryIsEmpty()
+        {
+            var dir = Create_DirectoryWithFiles();
+
+            var duplicateFinderService = new DuplicateFinderService();
+
+            try
+            {
+                var duplicateGroup = duplicateFinderService.FindDuplicates(dir);
+
+                Assert.Empty(duplicateGroup);
+            }
+            finally
+            {
+                DeleteDirectory(dir);
+            }
+        }
+        [Fact]
+        public void FindDuplicates_ReturnsEmptyResult_WhenOnlyOneUniqueFileExists()
+        {
+            var dir = Create_DirectoryWithFiles(
+               ("folder1", "file1.txt", "Hello")
+               );
+
+            var duplicateFinderService = new DuplicateFinderService();
+
+            try
+            {
+                var duplicateGroup = duplicateFinderService.FindDuplicates(dir);
 
                 Assert.Empty(duplicateGroup);
             }
@@ -57,11 +95,11 @@ namespace DuplicateFinder.Core.Tests
                 ("folder4", "file4.txt", "world")
                 );
 
-            var duplFindService = new DuplicateFinderService();
+            var duplicateFinderService = new DuplicateFinderService();
 
             try
             {
-                var duplicateGroup = duplFindService.FindDuplicates(dir);
+                var duplicateGroup = duplicateFinderService.FindDuplicates(dir);
 
 
                 var filesInGroup = Assert.Single(duplicateGroup.Values);
@@ -77,6 +115,8 @@ namespace DuplicateFinder.Core.Tests
         {
             string tempDirectoryPath = Path.Combine(Path.GetTempPath(), $"DuplicateFinderTests_{Guid.NewGuid():N}");
             
+            Directory.CreateDirectory(tempDirectoryPath);
+
             foreach (var (subFolder, fileName, content) in files)
             {
                 string folderPath = Path.Combine(tempDirectoryPath, subFolder);

@@ -32,8 +32,8 @@ namespace DuplicateFinder.Cli
                 int extraCopies = 0;
                 foreach ( var file in files)
                 {
-                    Console.WriteLine($"Group {num++}: ");
-                    Console.WriteLine($"hash - {file.Key}");
+                    Console.WriteLine($"Группа {num++}: ");
+                    Console.WriteLine($"Хэш - {file.Key}");
                     extraCopies += file.Value.Count() - 1;
                     foreach (var value in file.Value)
                     {   

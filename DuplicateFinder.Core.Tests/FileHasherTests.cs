@@ -1,7 +1,7 @@
 ﻿
 namespace DuplicateFinder.Core.Tests
 {
-    public class FindHasherTests
+    public class FileHasherTests
     {
         [Theory]
         [InlineData("Hello", "Hello", true)]
@@ -21,7 +21,7 @@ namespace DuplicateFinder.Core.Tests
             File.WriteAllText(file1Path, content1);
             File.WriteAllText(file2Path, content2);
 
-            FindHasher hasher = new FindHasher();
+            FileHasher hasher = new FileHasher();
             try
             {
                 //act
@@ -53,9 +53,9 @@ namespace DuplicateFinder.Core.Tests
             string path = Path.Combine(Path.GetTempPath(), $"FileNotFound_{Guid.NewGuid()}");
 
 
-            FindHasher hasher = new FindHasher();
+            FileHasher hasher = new FileHasher();
             //act + assert
-            Assert.Throws<FileNotFoundException>(() =>  hasher.GetHash(path));
+            Assert.Throws<FileNotFoundException>(() => hasher.GetHash(path));
 
         }
     }
